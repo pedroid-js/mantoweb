@@ -55,10 +55,14 @@ export function useScrollScale(
 export function useLayeredParallax(layerCount: number = 3): MotionValue<number>[] {
   const { scrollY } = useScroll();
   
-  return Array.from({ length: layerCount }, (_, i) => {
+  // Pre-calculate all transforms to avoid hooks in callbacks
+  const layers: MotionValue<number>[] = [];
+  for (let i = 0; i < layerCount; i++) {
     const speed = (i + 1) * 0.2; // Each layer moves faster
-    return useTransform(scrollY, [0, 1000], [0, -1000 * speed]);
-  });
+    layers.push(useTransform(scrollY, [0, 1000], [0, -1000 * speed]));
+  }
+  
+  return layers;
 }
 
 /**
