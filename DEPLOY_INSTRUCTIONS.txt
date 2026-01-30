@@ -1,0 +1,15 @@
+INSTRUCCIONES PARA DESPLEGAR:
+
+Ejecuta estos comandos en la terminal:
+
+git add .
+git commit -m "fix: force Next.js 16.1.6 with exact versions and .npmrc for Vercel"
+git push
+
+Esto subirá los siguientes cambios críticos:
+- package.json con versiones exactas (sin ^) de Next.js 16.1.6
+- .npmrc que fuerza save-exact=true
+- engines en package.json para Node >=18.17.0
+- Corrección del hook en parallax.ts
+
+Después de hacer push, Vercel desplegará automáticamente con Next.js 16.1.6.
