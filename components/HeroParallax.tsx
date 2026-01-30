@@ -38,8 +38,130 @@ export default function HeroParallax({
 
   // Only render particles on client to avoid hydration mismatch
   const [mounted, setMounted] = useState(false);
+  const [supernova, setSupernova] = useState<{ x: number; y: number; active: boolean }>({
+    x: 50,
+    y: 50,
+    active: false,
+  });
+
+  // Black holes system - multiple can exist at once
+  const [blackHoles, setBlackHoles] = useState<Array<{
+    id: number;
+    x: number;
+    y: number;
+    active: boolean;
+    stage: 'growing' | 'consuming' | 'exploding';
+  }>>([]);
+
+  // Store last black hole position to avoid spawning too close
+  const lastBlackHolePosition = useRef<{ x: number; y: number } | null>(null);
+  
+  // Black hole ID counter - persists across renders
+  const blackHoleIdCounter = useRef(0);
+
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Black hole spawner - creates black holes every 8-15 seconds
+  useEffect(() => {
+    // Function to generate a position with minimum distance from last position
+    const generateSafePosition = (): { x: number; y: number } => {
+      const minDistance = 30; // Minimum 30% distance from last black hole
+      let newX: number;
+      let newY: number;
+      let attempts = 0;
+      const maxAttempts = 50;
+
+      do {
+        newX = 25 + Math.random() * 50; // 25-75% of screen
+        newY = 25 + Math.random() * 50;
+        attempts++;
+
+        // If no previous position or max attempts reached, accept this position
+        if (!lastBlackHolePosition.current || attempts >= maxAttempts) {
+          break;
+        }
+
+        // Calculate distance from last position
+        const dx = newX - lastBlackHolePosition.current.x;
+        const dy = newY - lastBlackHolePosition.current.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // If distance is sufficient, accept this position
+        if (distance >= minDistance) {
+          break;
+        }
+      } while (true);
+
+      return { x: newX, y: newY };
+    };
+
+    const spawnBlackHole = () => {
+      const randomDelay = 8000 + Math.random() * 7000; // 8-15 seconds
+      
+      setTimeout(() => {
+        const position = generateSafePosition();
+        
+        const newBlackHole = {
+          id: blackHoleIdCounter.current++,
+          x: position.x,
+          y: position.y,
+          active: true,
+          stage: 'growing' as const,
+        };
+
+        // Update last position
+        lastBlackHolePosition.current = { x: position.x, y: position.y };
+
+        setBlackHoles(prev => [...prev, newBlackHole]);
+
+        // Stage progression: growing -> consuming -> exploding -> remove
+        setTimeout(() => {
+          setBlackHoles(prev => prev.map(bh => 
+            bh.id === newBlackHole.id ? { ...bh, stage: 'consuming' } : bh
+          ));
+        }, 1500); // Grow for 1.5s
+
+        setTimeout(() => {
+          setBlackHoles(prev => prev.map(bh => 
+            bh.id === newBlackHole.id ? { ...bh, stage: 'exploding' } : bh
+          ));
+        }, 5500); // Consume for 4s
+
+        setTimeout(() => {
+          setBlackHoles(prev => prev.filter(bh => bh.id !== newBlackHole.id));
+        }, 7000); // Explode for 1.5s then remove
+
+        spawnBlackHole(); // Schedule next one
+      }, randomDelay);
+    };
+
+    spawnBlackHole();
+  }, []);
+
+  // Supernova trigger - random every 30-50 seconds (less frequent, more discrete)
+  useEffect(() => {
+    const triggerSupernova = () => {
+      const randomDelay = 30000 + Math.random() * 20000; // 30-50 seconds
+      
+      setTimeout(() => {
+        setSupernova({
+          x: 20 + Math.random() * 60, // 20-80% of screen
+          y: 20 + Math.random() * 60,
+          active: true,
+        });
+
+        // Deactivate after 5 seconds
+        setTimeout(() => {
+          setSupernova(prev => ({ ...prev, active: false }));
+        }, 5000);
+
+        triggerSupernova(); // Schedule next one
+      }, randomDelay);
+    };
+
+    triggerSupernova();
   }, []);
 
   // Generate more particles with varied sizes - INCREASED
@@ -227,6 +349,415 @@ export default function HeroParallax({
           ))}
         </div>
       )}
+
+      {/* SUPERNOVA EXPLOSION - TEMPORARILY DISABLED
+      {mounted && supernova.active && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <motion.div
+            className="absolute"
+            style={{
+              left: `${supernova.x}%`,
+              top: `${supernova.y}%`,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0.7, 0.7, 0.7, 0.5, 0] }}
+            transition={{ duration: 5 }}
+          >
+            <motion.div
+              className="absolute rounded-full"
+              style={{
+                width: '30px',
+                height: '30px',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.7) 20%, rgba(255, 200, 100, 0.6) 40%, rgba(255, 150, 50, 0.5) 60%, rgba(34, 211, 238, 0.4) 80%, transparent 100%)',
+                transform: 'translate(-50%, -50%)',
+                boxShadow: '0 0 50px 20px rgba(255, 255, 255, 0.6), 0 0 100px 40px rgba(34, 211, 238, 0.5), 0 0 150px 60px rgba(147, 51, 234, 0.4)',
+              }}
+              animate={{
+                scale: [0, 0.3, 0.8, 1.5, 2.5, 4, 6],
+                opacity: [1, 1, 1, 0.8, 0.5, 0.2, 0],
+              }}
+              transition={{ duration: 4.5, ease: "easeOut" }}
+            />
+
+            <motion.div
+              className="absolute rounded-full"
+              style={{
+                width: '40px',
+                height: '40px',
+                background: 'radial-gradient(circle, rgba(255, 200, 100, 0.5) 0%, rgba(255, 100, 150, 0.4) 40%, rgba(147, 51, 234, 0.3) 70%, transparent 100%)',
+                transform: 'translate(-50%, -50%)',
+                filter: 'blur(8px)',
+              }}
+              animate={{
+                scale: [0, 0.5, 1.5, 3, 5],
+                opacity: [0.6, 0.7, 0.5, 0.3, 0],
+              }}
+              transition={{ duration: 4, ease: "easeOut" }}
+            />
+
+            <motion.div
+              className="absolute rounded-full"
+              style={{
+                width: '50px',
+                height: '50px',
+                border: '4px solid rgba(34, 211, 238, 0.6)',
+                transform: 'translate(-50%, -50%)',
+                boxShadow: '0 0 20px rgba(34, 211, 238, 0.7)',
+              }}
+              animate={{
+                scale: [0, 1, 3, 6, 10, 15],
+                opacity: [0.8, 0.8, 0.6, 0.4, 0.2, 0],
+                borderWidth: ['4px', '3px', '2px', '1px', '0.5px', '0px'],
+              }}
+              transition={{ duration: 4.5, ease: "easeOut" }}
+            />
+
+            {Array.from({ length: 50 }).map((_, i) => {
+              const angle = (i * 360) / 50;
+              const speedVariation = 0.8 + Math.random() * 0.6;
+              const distance = (80 + Math.random() * 70) * speedVariation;
+              const x = Math.cos((angle * Math.PI) / 180) * distance;
+              const y = Math.sin((angle * Math.PI) / 180) * distance;
+              const hue = i % 3 === 0 ? 'rgba(34, 211, 238, 0.8)' : i % 3 === 1 ? 'rgba(147, 51, 234, 0.8)' : 'rgba(236, 72, 153, 0.8)';
+              const size = 1.5 + Math.random() * 2;
+              
+              return (
+                <motion.div
+                  key={`main-burst-${i}`}
+                  className="absolute rounded-full"
+                  style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    background: hue,
+                    transform: 'translate(-50%, -50%)',
+                    boxShadow: `0 0 ${size * 3}px ${hue}`,
+                  }}
+                  animate={{
+                    x: [0, x * 0.3, x * 0.7, x * 1.2],
+                    y: [0, y * 0.3, y * 0.7, y * 1.2],
+                    opacity: [0.8, 0.8, 0.6, 0],
+                    scale: [1, 1.2, 0.8, 0.3],
+                  }}
+                  transition={{ 
+                    duration: 3 + Math.random() * 1.5, 
+                    delay: i * 0.01,
+                    ease: "easeOut" 
+                  }}
+                />
+              );
+            })}
+
+            {Array.from({ length: 15 }).map((_, i) => {
+              const angle = (i * 360) / 15;
+              const distance = 90 + Math.random() * 100;
+              const x = Math.cos((angle * Math.PI) / 180) * distance;
+              const y = Math.sin((angle * Math.PI) / 180) * distance;
+              const size = 3 + Math.random() * 4;
+              const rotation = Math.random() * 360;
+              
+              return (
+                <motion.div
+                  key={`fragment-${i}`}
+                  className="absolute rounded-sm"
+                  style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(34, 211, 238, 0.6) 50%, rgba(147, 51, 234, 0.5) 100%)',
+                    transform: 'translate(-50%, -50%)',
+                    boxShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
+                  }}
+                  animate={{
+                    x: [0, x * 0.5, x * 1.3],
+                    y: [0, y * 0.5, y * 1.3],
+                    opacity: [0.8, 0.8, 0],
+                    scale: [1.2, 0.8, 0.2],
+                    rotate: [rotation, rotation + 360],
+                  }}
+                  transition={{ 
+                    duration: 3.5 + Math.random() * 1, 
+                    delay: i * 0.02,
+                    ease: "easeOut" 
+                  }}
+                />
+              );
+            })}
+          </motion.div>
+        </div>
+      )}
+      */}
+
+      {/* BLACK HOLES SYSTEM - Gravitational monsters that consume particles */}
+      {mounted && blackHoles.map((blackHole) => {
+        // Calculate which nearby particles should be affected
+        const affectedParticles = particles.filter((particle) => {
+          const dx = particle.left - blackHole.x;
+          const dy = particle.top - blackHole.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          return distance < 25; // 25% of screen radius
+        });
+
+        return (
+          <div key={blackHole.id} className="absolute inset-0 pointer-events-none">
+            <motion.div
+              className="absolute"
+              style={{
+                left: `${blackHole.x}%`,
+                top: `${blackHole.y}%`,
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: blackHole.stage === 'growing' ? [0, 1] : 
+                         blackHole.stage === 'consuming' ? 1 : [1, 0]
+              }}
+              transition={{ duration: blackHole.stage === 'growing' ? 1.5 : blackHole.stage === 'exploding' ? 1.5 : 0 }}
+            >
+              {/* EVENT HORIZON - The absolutely black center */}
+              <motion.div
+                className="absolute rounded-full bg-black"
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  background: '#000000',
+                  transform: 'translate(-50%, -50%)',
+                  boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 1), 0 0 1px rgba(0, 0, 0, 1)',
+                  zIndex: 10,
+                }}
+                animate={{
+                  scale: blackHole.stage === 'growing' ? [0, 1] : 
+                         blackHole.stage === 'consuming' ? [1, 1.05, 1] : [1, 0.3, 0],
+                }}
+                transition={{ 
+                  duration: blackHole.stage === 'growing' ? 1.5 : 
+                           blackHole.stage === 'consuming' ? 2.5 : 1.5,
+                  repeat: blackHole.stage === 'consuming' ? Infinity : 0,
+                  ease: "easeInOut"
+                }}
+              />
+
+              {/* PHOTON SPHERE - Innermost ring of light bending */}
+              <motion.div
+                className="absolute rounded-full"
+                style={{
+                  width: '50px',
+                  height: '50px',
+                  border: '1px solid rgba(100, 150, 255, 0.4)',
+                  transform: 'translate(-50%, -50%)',
+                  boxShadow: '0 0 8px rgba(100, 150, 255, 0.3), inset 0 0 8px rgba(100, 150, 255, 0.2)',
+                  zIndex: 9,
+                }}
+                animate={{
+                  scale: blackHole.stage === 'growing' ? [0, 1] : 
+                         blackHole.stage === 'consuming' ? [1, 1.08, 1] : [1, 0.4, 0],
+                  opacity: blackHole.stage === 'growing' ? [0, 0.6] : 
+                           blackHole.stage === 'consuming' ? [0.6, 0.8, 0.6] : [0.6, 0],
+                }}
+                transition={{ 
+                  duration: blackHole.stage === 'growing' ? 1.5 : 
+                           blackHole.stage === 'consuming' ? 1.8 : 1.5,
+                  repeat: blackHole.stage === 'consuming' ? Infinity : 0,
+                  ease: "easeInOut"
+                }}
+              />
+
+              {/* ACCRETION DISK - Glowing ring of captured matter (more separated) */}
+              <motion.div
+                className="absolute rounded-full"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  background: 'conic-gradient(from 0deg, rgba(255, 150, 50, 0.5) 0deg, rgba(255, 100, 100, 0.6) 60deg, rgba(200, 50, 255, 0.5) 120deg, rgba(50, 150, 255, 0.6) 180deg, rgba(100, 255, 200, 0.5) 240deg, rgba(255, 200, 50, 0.6) 300deg, rgba(255, 150, 50, 0.5) 360deg)',
+                  transform: 'translate(-50%, -50%)',
+                  borderRadius: '50%',
+                  filter: 'blur(4px)',
+                  opacity: 0.6,
+                  maskImage: 'radial-gradient(circle, transparent 0%, transparent 35%, black 45%, black 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, transparent 0%, transparent 35%, black 45%, black 100%)',
+                  zIndex: 5,
+                }}
+                animate={{
+                  rotate: blackHole.stage === 'exploding' ? [0, 180] : [0, 360],
+                  scale: blackHole.stage === 'growing' ? [0, 0.8, 1] : 
+                         blackHole.stage === 'consuming' ? [1, 1.15, 1] : [1, 1.8],
+                  opacity: blackHole.stage === 'growing' ? [0, 0.6] : 
+                           blackHole.stage === 'consuming' ? [0.6, 0.85, 0.6] : [0.6, 0],
+                }}
+                transition={{ 
+                  rotate: { duration: blackHole.stage === 'exploding' ? 1.5 : 4, repeat: blackHole.stage === 'exploding' ? 0 : Infinity, ease: "linear" },
+                  scale: { duration: blackHole.stage === 'growing' ? 1.5 : blackHole.stage === 'consuming' ? 3 : 1.5, repeat: blackHole.stage === 'consuming' ? Infinity : 0, ease: "easeInOut" },
+                  opacity: { duration: 1.5 }
+                }}
+              />
+
+              {/* INNER ACCRETION DISK - Brighter inner ring */}
+              <motion.div
+                className="absolute rounded-full"
+                style={{
+                  width: '70px',
+                  height: '70px',
+                  background: 'conic-gradient(from 180deg, rgba(255, 200, 100, 0.7) 0deg, rgba(255, 150, 200, 0.8) 90deg, rgba(150, 100, 255, 0.7) 180deg, rgba(100, 200, 255, 0.8) 270deg, rgba(255, 200, 100, 0.7) 360deg)',
+                  transform: 'translate(-50%, -50%)',
+                  borderRadius: '50%',
+                  filter: 'blur(3px)',
+                  maskImage: 'radial-gradient(circle, transparent 0%, transparent 30%, black 42%, black 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, transparent 0%, transparent 30%, black 42%, black 100%)',
+                  zIndex: 6,
+                }}
+                animate={{
+                  rotate: blackHole.stage === 'exploding' ? [0, -180] : [0, -360],
+                  scale: blackHole.stage === 'growing' ? [0, 0.9, 1] : 
+                         blackHole.stage === 'consuming' ? [1, 1.2, 1] : [1, 2.5],
+                  opacity: blackHole.stage === 'growing' ? [0, 0.8] : 
+                           blackHole.stage === 'consuming' ? [0.8, 1, 0.8] : [0.8, 0],
+                }}
+                transition={{ 
+                  rotate: { duration: blackHole.stage === 'exploding' ? 1.5 : 2.5, repeat: blackHole.stage === 'exploding' ? 0 : Infinity, ease: "linear" },
+                  scale: { duration: blackHole.stage === 'growing' ? 1.5 : blackHole.stage === 'consuming' ? 2 : 1.5, repeat: blackHole.stage === 'consuming' ? Infinity : 0, ease: "easeInOut" },
+                  opacity: { duration: 1.5 }
+                }}
+              />
+
+              {/* GRAVITATIONAL LENSING - Distortion rings */}
+              {[0, 1, 2].map((ringIdx) => (
+                <motion.div
+                  key={`lens-${ringIdx}`}
+                  className="absolute rounded-full border"
+                  style={{
+                    width: `${100 + ringIdx * 40}px`,
+                    height: `${100 + ringIdx * 40}px`,
+                    borderColor: `rgba(100, 150, 255, ${0.3 - ringIdx * 0.08})`,
+                    borderWidth: '2px',
+                    transform: 'translate(-50%, -50%)',
+                    filter: 'blur(1px)',
+                  }}
+                  animate={{
+                    scale: blackHole.stage === 'growing' ? [0, 1] : 
+                           blackHole.stage === 'consuming' ? [1, 1.05, 1] : [1, 1.5],
+                    opacity: blackHole.stage === 'growing' ? [0, 0.4 - ringIdx * 0.1] : 
+                             blackHole.stage === 'consuming' ? [0.4 - ringIdx * 0.1, 0.5 - ringIdx * 0.1, 0.4 - ringIdx * 0.1] : [0.4 - ringIdx * 0.1, 0],
+                  }}
+                  transition={{ 
+                    duration: blackHole.stage === 'growing' ? 1.5 : blackHole.stage === 'consuming' ? 2.5 : 1.5,
+                    delay: ringIdx * 0.1,
+                    repeat: blackHole.stage === 'consuming' ? Infinity : 0,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+
+              {/* HAWKING RADIATION - Subtle glow */}
+              <motion.div
+                className="absolute rounded-full blur-2xl"
+                style={{
+                  width: '120px',
+                  height: '120px',
+                  background: 'radial-gradient(circle, rgba(100, 150, 255, 0.3) 0%, rgba(150, 100, 255, 0.2) 50%, transparent 100%)',
+                  transform: 'translate(-50%, -50%)',
+                }}
+                animate={{
+                  scale: blackHole.stage === 'growing' ? [0, 1] : 
+                         blackHole.stage === 'consuming' ? [1, 1.2, 1] : [1, 2],
+                  opacity: blackHole.stage === 'growing' ? [0, 0.5] : 
+                           blackHole.stage === 'consuming' ? [0.5, 0.7, 0.5] : [0.5, 0],
+                }}
+                transition={{ 
+                  duration: blackHole.stage === 'growing' ? 1.5 : blackHole.stage === 'consuming' ? 3 : 1.5,
+                  repeat: blackHole.stage === 'consuming' ? Infinity : 0,
+                  ease: "easeInOut"
+                }}
+              />
+
+              {/* CONSUMING PARTICLES - Particles being sucked in */}
+              {blackHole.stage === 'consuming' && affectedParticles.map((particle, idx) => {
+                const dx = particle.left - blackHole.x;
+                const dy = particle.top - blackHole.y;
+                const startDistance = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx);
+                const spiralRotations = 2 + Math.random() * 2;
+                
+                return (
+                  <motion.div
+                    key={`consumed-${idx}`}
+                    className="absolute w-1.5 h-1.5 rounded-full"
+                    style={{
+                      left: `${dx}%`,
+                      top: `${dy}%`,
+                      background: 'rgba(255, 200, 150, 1)',
+                      boxShadow: '0 0 6px rgba(255, 200, 150, 1)',
+                    }}
+                    animate={{
+                      x: [0, -dx * 0.3, -dx * 0.7, -dx],
+                      y: [0, -dy * 0.3, -dy * 0.7, -dy],
+                      opacity: [0, 0.8, 1, 0],
+                      scale: [0.5, 1.2, 0.8, 0],
+                      rotate: [0, spiralRotations * 360],
+                    }}
+                    transition={{
+                      duration: 3 + Math.random() * 1,
+                      delay: idx * 0.05,
+                      repeat: Infinity,
+                      ease: "easeIn"
+                    }}
+                  />
+                );
+              })}
+
+              {/* EXPLOSION PARTICLES - When black hole collapses */}
+              {blackHole.stage === 'exploding' && (
+                <>
+                  {Array.from({ length: 25 }).map((_, i) => {
+                    const angle = (i * 360) / 25;
+                    const distance = 60 + Math.random() * 40;
+                    const x = Math.cos((angle * Math.PI) / 180) * distance;
+                    const y = Math.sin((angle * Math.PI) / 180) * distance;
+                    const hue = i % 3 === 0 ? 'rgba(255, 200, 100, 1)' : i % 3 === 1 ? 'rgba(255, 150, 200, 1)' : 'rgba(150, 200, 255, 1)';
+                    
+                    return (
+                      <motion.div
+                        key={`explosion-${i}`}
+                        className="absolute rounded-full"
+                        style={{
+                          width: '3px',
+                          height: '3px',
+                          background: hue,
+                          transform: 'translate(-50%, -50%)',
+                          boxShadow: `0 0 8px ${hue}`,
+                        }}
+                        animate={{
+                          x: [0, x * 0.5, x],
+                          y: [0, y * 0.5, y],
+                          opacity: [1, 0.8, 0],
+                          scale: [1.5, 1, 0.3],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          delay: i * 0.02,
+                          ease: "easeOut"
+                        }}
+                      />
+                    );
+                  })}
+
+                  {/* Explosion flash */}
+                  <motion.div
+                    className="absolute rounded-full"
+                    style={{
+                      width: '60px',
+                      height: '60px',
+                      background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(150, 200, 255, 0.6) 40%, transparent 100%)',
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                    animate={{
+                      scale: [0, 2, 4],
+                      opacity: [1, 0.5, 0],
+                    }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                  />
+                </>
+              )}
+            </motion.div>
+          </div>
+        );
+      })}
 
       {/* Nebula clouds - additional layer */}
       <motion.div className="absolute inset-0 opacity-20" style={{ y: y2 }}>

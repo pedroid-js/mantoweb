@@ -32,7 +32,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
         isScrolled || !isHomePage
           ? "bg-slate-900/95 backdrop-blur-xl shadow-lg" 
           : "bg-transparent"
@@ -46,18 +46,40 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`font-medium transition-colors relative group ${
-                  isScrolled || !isHomePage
-                    ? "text-white/90 hover:text-white"
-                    : "text-white drop-shadow-md hover:text-white"
-                }`}
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
-              </Link>
+              <motion.div key={link.href} className="relative group">
+                <Link
+                  href={link.href}
+                  className={`font-medium relative inline-block ${
+                    isScrolled || !isHomePage
+                      ? "text-white/90"
+                      : "text-white drop-shadow-md"
+                  }`}
+                >
+                  <motion.span
+                    className="relative z-10"
+                    whileHover={{ y: -2 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {link.label}
+                  </motion.span>
+                  
+                  {/* Underline gradient effect */}
+                  <motion.span 
+                    className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"
+                    initial={{ width: 0, opacity: 0 }}
+                    whileHover={{ width: '100%', opacity: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
+                  
+                  {/* Glow effect on hover */}
+                  <motion.span
+                    className="absolute inset-0 rounded-md blur-sm bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileHover={{ opacity: 1, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </Link>
+              </motion.div>
             ))}
           </div>
 

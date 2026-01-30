@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -21,6 +21,26 @@ export default function Home() {
   const t = content[language];
   const problemRef = useRef<HTMLElement>(null);
   const problemInView = useInView(problemRef, { once: true, margin: "-100px" });
+
+  // Client-side only state
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Generate particles once on client
+  const particles = useMemo(() => 
+    Array.from({ length: 12 }).map((_, i) => {
+      const angle = (i * 360) / 12;
+      const radius = 200 + Math.random() * 50;
+      const x = Math.cos(angle * Math.PI / 180) * radius;
+      const y = Math.sin(angle * Math.PI / 180) * radius;
+      const opacity = 0.4 + Math.random() * 0.4;
+      
+      return { x, y, opacity };
+    }),
+    []
+  );
 
   const handlePrimaryCTA = () => {
     router.push("/donate");
@@ -205,37 +225,30 @@ export default function Home() {
               ))}
 
               {/* Tectonic plate fragments - floating particles */}
-              {Array.from({ length: 12 }).map((_, i) => {
-                const angle = (i * 360) / 12;
-                const radius = 200 + Math.random() * 50;
-                const x = Math.cos(angle * Math.PI / 180) * radius;
-                const y = Math.sin(angle * Math.PI / 180) * radius;
-                
-                return (
-                  <motion.div
-                    key={`particle-${i}`}
-                    className="absolute w-2 h-2 rounded-full"
-                    style={{
-                      background: `rgba(34, 211, 238, ${0.4 + Math.random() * 0.4})`,
-                      boxShadow: '0 0 10px rgba(34, 211, 238, 0.6)'
-                    }}
-                    initial={{ x: 0, y: 0, opacity: 0 }}
-                    animate={problemInView ? {
-                      x: [0, x, x * 1.1, x],
-                      y: [0, y, y * 1.1, y],
-                      opacity: [0, 0.8, 1, 0.6],
-                      scale: [0, 1, 1.2, 1]
-                    } : {}}
-                    transition={{
-                      delay: i * 0.1,
-                      duration: 4 + i * 0.3,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      ease: "easeInOut"
-                    }}
-                  />
-                );
-              })}
+              {mounted && particles.map((particle, i) => (
+                <motion.div
+                  key={`particle-${i}`}
+                  className="absolute w-2 h-2 rounded-full"
+                  style={{
+                    background: `rgba(34, 211, 238, ${particle.opacity})`,
+                    boxShadow: '0 0 10px rgba(34, 211, 238, 0.6)'
+                  }}
+                  initial={{ x: 0, y: 0, opacity: 0 }}
+                  animate={problemInView ? {
+                    x: [0, particle.x, particle.x * 1.1, particle.x],
+                    y: [0, particle.y, particle.y * 1.1, particle.y],
+                    opacity: [0, 0.8, 1, 0.6],
+                    scale: [0, 1, 1.2, 1]
+                  } : {}}
+                  transition={{
+                    delay: i * 0.1,
+                    duration: 4 + i * 0.3,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
 
               {/* Center icon with glow */}
               <motion.div

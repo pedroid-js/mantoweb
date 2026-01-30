@@ -11,9 +11,23 @@ export default function BrandLogo({ className = "" }: BrandLogoProps) {
   return (
     <Link
       href="/"
-      className={`inline-flex items-center group ${className}`}
+      className={`inline-flex items-center gap-1.5 group ${className}`}
       aria-label="Mantossalvo home"
     >
+      <motion.div
+        whileHover={{ scale: 1.05, rotate: 5 }}
+        transition={{ duration: 0.2 }}
+        className="flex-shrink-0 flex items-center"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/icon.png"
+          alt="Mantossalvo icon"
+          className="rounded-md"
+          style={{ height: '0px', width: 'auto', display: 'block' }}
+        />
+      </motion.div>
+      
       <motion.svg
         viewBox="0 0 180 28"
         className="h-7 w-auto"
