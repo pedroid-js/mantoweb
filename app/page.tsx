@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Layers, Globe, TrendingUp, Users, Target, Shield } from "lucide-react";
@@ -59,7 +60,7 @@ export default function Home() {
             {t.intro.text}
           </motion.p>
           <motion.div
-            className="mt-8 p-4 bg-blue-500/5 border border-blue-500/20 rounded-lg text-sm text-foreground/70 text-center"
+            className="mt-8 p-4 bg-blue-500/10 border border-blue-400/30 rounded-lg text-sm text-blue-200/90 text-center backdrop-blur-sm"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -105,9 +106,17 @@ export default function Home() {
         animate={problemInView ? "visible" : "hidden"}
         variants={staggerContainer}
       >
-        {/* Background parallax element */}
-        <div className="absolute inset-0 -z-10">
+        {/* Background parallax element - Enhanced */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+          <motion.div 
+            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-3xl"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,42 +132,157 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Abstract Earth Layers Visualization */}
+          {/* Earth's Mantle Layers Visualization - Enhanced */}
           <motion.div
-            className="max-w-2xl mx-auto relative h-80"
+            className="max-w-3xl mx-auto relative h-[500px]"
             variants={fadeInUp}
           >
             <div className="absolute inset-0 flex items-center justify-center">
-              {[0, 1, 2, 3, 4].map((layer) => (
+              {/* Outer core - rotating glow */}
+              <motion.div
+                className="absolute w-32 h-32 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(255, 140, 0, 0.8) 0%, rgba(255, 69, 0, 0.4) 50%, transparent 100%)',
+                  filter: 'blur(20px)'
+                }}
+                animate={{ 
+                  rotate: 360,
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                }}
+              />
+              
+              {/* Inner core */}
+              <motion.div
+                className="absolute w-20 h-20 rounded-full z-10"
+                style={{
+                  background: 'radial-gradient(circle, rgb(255, 200, 100) 0%, rgb(255, 140, 0) 100%)',
+                  boxShadow: '0 0 40px rgba(255, 140, 0, 0.6), inset 0 0 20px rgba(255, 200, 100, 0.8)'
+                }}
+                animate={{ 
+                  scale: [1, 1.05, 1],
+                  boxShadow: [
+                    '0 0 40px rgba(255, 140, 0, 0.6), inset 0 0 20px rgba(255, 200, 100, 0.8)',
+                    '0 0 60px rgba(255, 140, 0, 0.8), inset 0 0 30px rgba(255, 200, 100, 1)',
+                    '0 0 40px rgba(255, 140, 0, 0.6), inset 0 0 20px rgba(255, 200, 100, 0.8)'
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Mantle layers with gradients */}
+              {[
+                { size: 140, color: 'rgba(255, 100, 0, 0.4)', delay: 0, name: 'lower mantle' },
+                { size: 200, color: 'rgba(255, 120, 50, 0.35)', delay: 0.2, name: 'transition zone' },
+                { size: 260, color: 'rgba(220, 140, 80, 0.3)', delay: 0.4, name: 'upper mantle' },
+                { size: 320, color: 'rgba(180, 160, 120, 0.25)', delay: 0.6, name: 'asthenosphere' },
+                { size: 380, color: 'rgba(34, 211, 238, 0.2)', delay: 0.8, name: 'crust' },
+              ].map((layer, index) => (
                 <motion.div
-                  key={layer}
+                  key={index}
                   className="absolute rounded-full border-2"
                   style={{
-                    width: `${(5 - layer) * 80}px`,
-                    height: `${(5 - layer) * 80}px`,
-                    borderColor: `rgba(34, 211, 238, ${0.2 + layer * 0.15})`,
+                    width: `${layer.size}px`,
+                    height: `${layer.size}px`,
+                    borderColor: layer.color,
+                    background: `radial-gradient(circle, ${layer.color} 0%, transparent 70%)`,
                   }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={problemInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                  transition={{ delay: layer * 0.15, duration: 0.8 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div
-                    className="absolute inset-0 rounded-full"
+                  initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                  animate={problemInView ? { 
+                    scale: 1, 
+                    opacity: 1,
+                    rotate: index % 2 === 0 ? 360 : -360
+                  } : { scale: 0, opacity: 0 }}
+                  transition={{ 
+                    scale: { delay: layer.delay, duration: 0.8 },
+                    opacity: { delay: layer.delay, duration: 0.8 },
+                    rotate: { delay: layer.delay + 1, duration: 40 + index * 10, repeat: Infinity, ease: "linear" }
+                  }}
+                />
+              ))}
+
+              {/* Tectonic plate fragments - floating particles */}
+              {Array.from({ length: 12 }).map((_, i) => {
+                const angle = (i * 360) / 12;
+                const radius = 200 + Math.random() * 50;
+                const x = Math.cos(angle * Math.PI / 180) * radius;
+                const y = Math.sin(angle * Math.PI / 180) * radius;
+                
+                return (
+                  <motion.div
+                    key={`particle-${i}`}
+                    className="absolute w-2 h-2 rounded-full"
                     style={{
-                      background: `radial-gradient(circle, rgba(34, 211, 238, ${0.05 + layer * 0.02}) 0%, transparent 70%)`,
+                      background: `rgba(34, 211, 238, ${0.4 + Math.random() * 0.4})`,
+                      boxShadow: '0 0 10px rgba(34, 211, 238, 0.6)'
+                    }}
+                    initial={{ x: 0, y: 0, opacity: 0 }}
+                    animate={problemInView ? {
+                      x: [0, x, x * 1.1, x],
+                      y: [0, y, y * 1.1, y],
+                      opacity: [0, 0.8, 1, 0.6],
+                      scale: [0, 1, 1.2, 1]
+                    } : {}}
+                    transition={{
+                      delay: i * 0.1,
+                      duration: 4 + i * 0.3,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      ease: "easeInOut"
                     }}
                   />
-                </motion.div>
-              ))}
+                );
+              })}
+
+              {/* Center icon with glow */}
               <motion.div
-                className="absolute"
-                initial={{ opacity: 0 }}
-                animate={problemInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ delay: 0.8 }}
+                className="absolute z-20"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={problemInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                transition={{ delay: 1.2, duration: 0.5 }}
               >
-                <Layers className="w-16 h-16 text-accent" />
+                <motion.div
+                  animate={{
+                    filter: [
+                      'drop-shadow(0 0 20px rgba(34, 211, 238, 0.6))',
+                      'drop-shadow(0 0 40px rgba(34, 211, 238, 0.9))',
+                      'drop-shadow(0 0 20px rgba(34, 211, 238, 0.6))'
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Layers className="w-16 h-16 text-accent" />
+                </motion.div>
               </motion.div>
+
+              {/* Convection currents - curved paths */}
+              {[0, 1, 2, 3].map((i) => (
+                <motion.div
+                  key={`current-${i}`}
+                  className="absolute"
+                  style={{
+                    width: '280px',
+                    height: '280px',
+                    border: '2px dashed rgba(255, 140, 0, 0.3)',
+                    borderRadius: '50%',
+                    transform: `rotate(${i * 45}deg)`
+                  }}
+                  initial={{ opacity: 0 }}
+                  animate={problemInView ? {
+                    opacity: [0, 0.5, 0],
+                    scale: [0.9, 1, 0.9]
+                  } : {}}
+                  transition={{
+                    delay: 1 + i * 0.2,
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
             </div>
           </motion.div>
         </div>
@@ -346,9 +470,11 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <p className="text-foreground/70 mb-4">{t.faq.ctaText}</p>
-            <Button variant="outline" size="md">
-              {t.faq.ctaButton}
-            </Button>
+            <Link href="/contact">
+              <Button variant="outline" size="md">
+                {t.faq.ctaButton}
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>

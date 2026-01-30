@@ -122,15 +122,13 @@ export default function StatCounter({
         transition={{ duration: 0.3 }}
       >
         <span 
-          className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text"
+          className="inline-block font-bold"
           style={{
-            WebkitBackgroundClip: 'text !important',
-            WebkitTextFillColor: 'transparent !important',
-            backgroundClip: 'text !important',
-            color: 'transparent !important',
-            display: 'inline-block !important',
-            fontWeight: 'bold !important'
-          } as any}
+            background: 'linear-gradient(to right, rgb(37, 99, 235), rgb(147, 51, 234), rgb(219, 39, 119))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}
         >
           {prefix}{formattedCount}{suffix}
         </span>
@@ -138,14 +136,13 @@ export default function StatCounter({
         {/* Efecto de incremento flotante */}
         {isIncrementing && (
           <motion.span
-            className="absolute -top-10 left-1/2 -translate-x-1/2 text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text z-50"
+            className="absolute -top-10 left-1/2 -translate-x-1/2 text-2xl font-bold z-50 inline-block"
             style={{
-              WebkitBackgroundClip: 'text !important',
-              WebkitTextFillColor: 'transparent !important',
-              backgroundClip: 'text !important',
-              color: 'transparent !important',
-              display: 'inline-block !important'
-            } as any}
+              background: 'linear-gradient(to right, rgb(74, 222, 128), rgb(16, 185, 129))',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}
             initial={{ opacity: 0, y: 0, scale: 0.8 }}
             animate={{ opacity: [0, 1, 1, 0], y: [0, -10, -20, -30], scale: [0.8, 1, 1, 0.9] }}
             transition={{ duration: 1.2 }}
