@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { fadeInUp } from "@/lib/motion";
 
@@ -33,6 +33,22 @@ export default function HeroParallax({
   const y3 = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  // Only render particles on client to avoid hydration mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Generate particle positions once on mount
+  const particles = useMemo(() => 
+    Array.from({ length: 50 }).map(() => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 3,
+    })),
+    []
+  );
+
   return (
     <div ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Layers */}
@@ -46,28 +62,33 @@ export default function HeroParallax({
         className="absolute inset-0 opacity-30"
         style={{ y: y2 }}
       >
-        <div className="absolute top-20 left-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-10 left-10 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
       </motion.div>
 
       {/* Particle field (CSS-based) */}
-      <motion.div
-        className="absolute inset-0 opacity-20"
-        style={{ y: y3 }}
-      >
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animation: "twinkle 3s ease-in-out infinite",
-            }}
-          />
-        ))}
-      </motion.div>
+      {mounted && (
+        <motion.div
+          className="absolute inset-0 opacity-20"
+          style={{ y: y3 }}
+        >
+          {particles.map((particle, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full"
+              style={{
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                animationName: "twinkle",
+                animationDuration: "3s",
+                animationTimingFunction: "ease-in-out",
+                animationIterationCount: "infinite",
+                animationDelay: `${particle.delay}s`,
+              }}
+            />
+          ))}
+        </motion.div>
+      )}
 
       {/* Content */}
       <motion.div

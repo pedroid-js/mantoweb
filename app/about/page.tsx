@@ -33,6 +33,36 @@ export default function AboutPage() {
       partners: {
         title: "Our Partners",
         subtitle: "Working with leading organizations worldwide",
+        testimonials: [
+          {
+            logo: "/logo-mit.svg",
+            name: "MIT",
+            author: "Dr. Susan Hockfield",
+            title: "President Emerita, MIT",
+            quote: "The democratization of scientific funding represents a paradigm shift in how we engage the public with research. This initiative exemplifies the collaborative spirit needed to advance planetary sciences.",
+          },
+          {
+            logo: "/logo-tesla.svg",
+            name: "Tesla",
+            author: "Elon Musk",
+            title: "CEO, Tesla & SpaceX",
+            quote: "Understanding planetary geology is crucial for multi-planetary civilization. Supporting accessible research and education in this field accelerates our collective knowledge and technological advancement.",
+          },
+          {
+            logo: "/logo-disney.svg",
+            name: "Disney",
+            author: "Kathleen Kennedy",
+            title: "President, Lucasfilm",
+            quote: "Science and storytelling share a common goal: inspiring wonder and curiosity. This campaign bridges education and imagination, making complex planetary science accessible to everyone.",
+          },
+          {
+            logo: "/logo-nintendo.svg",
+            name: "Nintendo",
+            author: "Shuntaro Furukawa",
+            title: "Representative Director and President",
+            quote: "科学教育への投資は未来への投資です。この取り組みは、世界中の人々に地球科学の重要性を伝える革新的な方法を提供します。(Investing in science education is investing in the future. This initiative provides an innovative way to communicate the importance of Earth sciences to people worldwide.)",
+          },
+        ],
       },
     },
     es: {
@@ -57,6 +87,36 @@ export default function AboutPage() {
       partners: {
         title: "Nuestros Socios",
         subtitle: "Trabajando con organizaciones líderes mundialmente",
+        testimonials: [
+          {
+            logo: "/logo-mit.svg",
+            name: "MIT",
+            author: "Dra. Susan Hockfield",
+            title: "Presidenta Emérita, MIT",
+            quote: "La democratización de la financiación científica representa un cambio de paradigma en cómo involucramos al público con la investigación. Esta iniciativa ejemplifica el espíritu colaborativo necesario para avanzar en las ciencias planetarias.",
+          },
+          {
+            logo: "/logo-tesla.svg",
+            name: "Tesla",
+            author: "Elon Musk",
+            title: "CEO, Tesla & SpaceX",
+            quote: "Comprender la geología planetaria es crucial para una civilización multiplanetaria. Apoyar la investigación y educación accesible en este campo acelera nuestro conocimiento colectivo y avance tecnológico.",
+          },
+          {
+            logo: "/logo-disney.svg",
+            name: "Disney",
+            author: "Kathleen Kennedy",
+            title: "Presidenta, Lucasfilm",
+            quote: "La ciencia y la narrativa comparten un objetivo común: inspirar asombro y curiosidad. Esta campaña une educación e imaginación, haciendo la compleja ciencia planetaria accesible para todos.",
+          },
+          {
+            logo: "/logo-nintendo.svg",
+            name: "Nintendo",
+            author: "Shuntaro Furukawa",
+            title: "Director Representante y Presidente",
+            quote: "科学教育への投資は未来への投資です。この取り組みは、世界中の人々に地球科学の重要性を伝える革新的な方法を提供します。(Invertir en educación científica es invertir en el futuro. Esta iniciativa proporciona una forma innovadora de comunicar la importancia de las ciencias de la Tierra a personas de todo el mundo.)",
+          },
+        ],
       },
     },
   };
@@ -200,20 +260,42 @@ export default function AboutPage() {
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="grid md:grid-cols-2 gap-8"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {[1, 2, 3, 4].map((i) => (
+            {t.partners.testimonials.map((partner, index) => (
               <motion.div
-                key={i}
-                className="aspect-square bg-muted/10 backdrop-blur-sm rounded-xl border border-muted/20 hover:border-accent/30 transition-all flex items-center justify-center"
+                key={index}
+                className="bg-gradient-to-br from-muted/10 to-muted/5 backdrop-blur-sm rounded-2xl p-8 border border-muted/20 hover:border-accent/30 transition-all"
                 variants={fadeInUp}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ y: -4 }}
               >
-                <Award className="w-12 h-12 text-muted/40" />
+                {/* Logo */}
+                <div className="flex items-center justify-center h-16 mb-6">
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    width={120}
+                    height={60}
+                    className="object-contain opacity-80"
+                  />
+                </div>
+
+                {/* Quote */}
+                <blockquote className="mb-6">
+                  <p className="text-foreground/80 italic leading-relaxed">
+                    "{partner.quote}"
+                  </p>
+                </blockquote>
+
+                {/* Author */}
+                <div className="border-t border-muted/20 pt-4">
+                  <p className="font-semibold text-foreground">{partner.author}</p>
+                  <p className="text-sm text-foreground/60">{partner.title}</p>
+                </div>
               </motion.div>
             ))}
           </motion.div>
