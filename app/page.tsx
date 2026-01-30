@@ -9,7 +9,7 @@ import StatCounter from "@/components/StatCounter";
 import CardGrid from "@/components/CardGrid";
 import AccordionFAQ from "@/components/AccordionFAQ";
 import Button from "@/components/Button";
-import { content, INITIAL_STATS } from "@/lib/constants";
+import { content, INITIAL_STATS, STATS_INCREMENT } from "@/lib/constants";
 import { fadeInUp, staggerContainer } from "@/lib/motion";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -77,15 +77,21 @@ export default function Home() {
             <StatCounter
               target={INITIAL_STATS.participants}
               label={t.stats.participants}
+              incrementPerMinute={STATS_INCREMENT.participants}
+              storageKey="mantossalvo_participants"
             />
             <StatCounter
               target={INITIAL_STATS.countries}
               label={t.stats.countries}
+              incrementPerMinute={STATS_INCREMENT.countries}
+              storageKey="mantossalvo_countries"
             />
             <StatCounter
               target={INITIAL_STATS.raised}
               label={t.stats.raised}
               prefix="$"
+              incrementPerMinute={STATS_INCREMENT.raised}
+              storageKey="mantossalvo_raised"
             />
           </div>
         </div>

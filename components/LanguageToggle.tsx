@@ -5,13 +5,18 @@ import { Globe } from "lucide-react";
 import { useState } from "react";
 
 interface LanguageToggleProps {
-  language: "en" | "es" | "ko" | "ja";
-  onLanguageChange: (lang: "en" | "es" | "ko" | "ja") => void;
+  language: "en" | "es" | "ko" | "ja" | "zh" | "hi" | "bn" | "pt" | "ru";
+  onLanguageChange: (lang: "en" | "es" | "ko" | "ja" | "zh" | "hi" | "bn" | "pt" | "ru") => void;
 }
 
 const languages = [
   { code: "en", label: "EN", name: "English" },
   { code: "es", label: "ES", name: "Español" },
+  { code: "zh", label: "ZH", name: "中文" },
+  { code: "hi", label: "HI", name: "हिन्दी" },
+  { code: "bn", label: "BN", name: "বাংলা" },
+  { code: "pt", label: "PT", name: "Português" },
+  { code: "ru", label: "RU", name: "Русский" },
   { code: "ko", label: "KO", name: "한국어" },
   { code: "ja", label: "JA", name: "日本語" },
 ] as const;
@@ -37,7 +42,7 @@ export default function LanguageToggle({ language, onLanguageChange }: LanguageT
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute top-full right-0 mt-2 bg-slate-800/95 backdrop-blur-xl rounded-lg shadow-xl border border-white/10 overflow-hidden z-50"
+          className="absolute top-full right-0 mt-2 bg-slate-800/95 backdrop-blur-xl rounded-lg shadow-xl border border-white/10 overflow-hidden z-50 max-h-[400px] overflow-y-auto"
           onMouseLeave={() => setIsOpen(false)}
         >
           {languages.map((lang) => (

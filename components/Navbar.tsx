@@ -67,7 +67,7 @@ export default function Navbar() {
             <ThemeToggle />
             <Link href="/donate">
               <Button variant="primary" size="md">
-                {language === "en" ? "Contribute $1" : language === "ko" ? "$1 기부하기" : language === "ja" ? "$1寄付する" : "Aportar $1"}
+                {language === "en" ? "Contribute $1" : language === "es" ? "Aportar $1" : language === "ko" ? "$1 기부하기" : language === "ja" ? "$1寄付する" : language === "zh" ? "捐赠$1" : language === "hi" ? "$1 दान करें" : language === "bn" ? "$1 দান করুন" : language === "pt" ? "Contribuir $1" : language === "ru" ? "Внести $1" : "Contribute $1"}
               </Button>
             </Link>
           </div>
@@ -113,7 +113,7 @@ export default function Navbar() {
           </div>
           <Link href="/donate" onClick={() => setIsOpen(false)}>
             <Button variant="primary" size="md" className="w-full">
-              {language === "en" ? "Contribute $1" : "Aportar $1"}
+              {language === "en" ? "Contribute $1" : language === "es" ? "Aportar $1" : language === "ko" ? "$1 기부하기" : language === "ja" ? "$1寄付する" : language === "zh" ? "捐赠$1" : language === "hi" ? "$1 दान करें" : language === "bn" ? "$1 दान করুন" : language === "pt" ? "Contribuir $1" : language === "ru" ? "Внести $1" : "Contribute $1"}
             </Button>
           </Link>
         </div>

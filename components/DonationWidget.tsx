@@ -6,7 +6,7 @@ import { Check, Shield, Lock } from "lucide-react";
 import Button from "./Button";
 
 interface DonationWidgetProps {
-  language: "en" | "es";
+  language: "en" | "es" | "ko" | "ja" | "zh" | "hi" | "bn" | "pt" | "ru";
   onSubmit?: (amount: number, currency: string, email?: string) => void;
 }
 
@@ -30,6 +30,9 @@ export default function DonationWidget({ language, onSubmit }: DonationWidgetPro
       submitButton: "Contribute Now",
       securityNote: "Secure Payment • Encrypted Connection",
       successMessage: "Thank you for your contribution!",
+      secureLabel: "Secure",
+      encryptedLabel: "Encrypted",
+      verifiedLabel: "Verified",
     },
     es: {
       title: "Haz tu contribución",
@@ -40,6 +43,100 @@ export default function DonationWidget({ language, onSubmit }: DonationWidgetPro
       submitButton: "Contribuir ahora",
       securityNote: "Pago seguro • Conexión cifrada",
       successMessage: "¡Gracias por tu contribución!",
+      secureLabel: "Seguro",
+      encryptedLabel: "Cifrado",
+      verifiedLabel: "Verificado",
+    },
+    ko: {
+      title: "기부하기",
+      amountLabel: "금액 선택",
+      customLabel: "사용자 지정 금액",
+      emailLabel: "이메일 (선택사항)",
+      updatesLabel: "업데이트를 받고 싶습니다",
+      submitButton: "지금 기부하기",
+      securityNote: "안전한 결제 • 암호화된 연결",
+      successMessage: "기여해 주셔서 감사합니다!",
+      secureLabel: "안전함",
+      encryptedLabel: "암호화됨",
+      verifiedLabel: "검증됨",
+    },
+    ja: {
+      title: "寄付をする",
+      amountLabel: "金額を選択",
+      customLabel: "カスタム金額",
+      emailLabel: "メール（オプション）",
+      updatesLabel: "更新情報を受け取りたい",
+      submitButton: "今すぐ寄付する",
+      securityNote: "安全な支払い • 暗号化された接続",
+      successMessage: "ご寄付ありがとうございます！",
+      secureLabel: "安全",
+      encryptedLabel: "暗号化",
+      verifiedLabel: "検証済み",
+    },
+    zh: {
+      title: "捐赠支持",
+      amountLabel: "选择金额",
+      customLabel: "自定义金额",
+      emailLabel: "邮箱（可选）",
+      updatesLabel: "我想接收更新",
+      submitButton: "立即捐赠",
+      securityNote: "安全支付 • 加密连接",
+      successMessage: "感谢您的捐赠！",
+      secureLabel: "安全",
+      encryptedLabel: "加密",
+      verifiedLabel: "已验证",
+    },
+    hi: {
+      title: "अपना योगदान दें",
+      amountLabel: "राशि चुनें",
+      customLabel: "कस्टम राशि",
+      emailLabel: "ईमेल (वैकल्पिक)",
+      updatesLabel: "मैं अपडेट प्राप्त करना चाहता हूं",
+      submitButton: "अभी योगदान दें",
+      securityNote: "सुरक्षित भुगतान • एन्क्रिप्टेड कनेक्शन",
+      successMessage: "आपके योगदान के लिए धन्यवाद!",
+      secureLabel: "सुरक्षित",
+      encryptedLabel: "एन्क्रिप्टेड",
+      verifiedLabel: "सत्यापित",
+    },
+    bn: {
+      title: "আপনার অবদান রাখুন",
+      amountLabel: "পরিমাণ নির্বাচন করুন",
+      customLabel: "কাস্টম পরিমাণ",
+      emailLabel: "ইমেল (ঐচ্ছিক)",
+      updatesLabel: "আমি আপডেট পেতে চাই",
+      submitButton: "এখনই অবদান রাখুন",
+      securityNote: "সুরক্ষিত পেমেন্ট • এনক্রিপ্টেড সংযোগ",
+      successMessage: "আপনার অবদানের জন্য ধন্যবাদ!",
+      secureLabel: "সুরক্ষিত",
+      encryptedLabel: "এনক্রিপ্টেড",
+      verifiedLabel: "যাচাইকৃত",
+    },
+    pt: {
+      title: "Faça sua contribuição",
+      amountLabel: "Selecionar valor",
+      customLabel: "Valor personalizado",
+      emailLabel: "E-mail (opcional)",
+      updatesLabel: "Quero receber atualizações",
+      submitButton: "Contribuir agora",
+      securityNote: "Pagamento seguro • Conexão criptografada",
+      successMessage: "Obrigado pela sua contribuição!",
+      secureLabel: "Seguro",
+      encryptedLabel: "Criptografado",
+      verifiedLabel: "Verificado",
+    },
+    ru: {
+      title: "Сделать вклад",
+      amountLabel: "Выберите сумму",
+      customLabel: "Пользовательская сумма",
+      emailLabel: "Электронная почта (необязательно)",
+      updatesLabel: "Я хочу получать обновления",
+      submitButton: "Внести вклад сейчас",
+      securityNote: "Безопасный платеж • Зашифрованное соединение",
+      successMessage: "Спасибо за ваш вклад!",
+      secureLabel: "Безопасно",
+      encryptedLabel: "Зашифровано",
+      verifiedLabel: "Проверено",
     },
   };
 
@@ -214,9 +311,9 @@ export default function DonationWidget({ language, onSubmit }: DonationWidgetPro
       {/* Trust Indicators */}
       <div className="mt-8 grid grid-cols-3 gap-4">
         {[
-          { icon: Shield, label: language === "en" ? "Secure" : "Seguro" },
-          { icon: Lock, label: language === "en" ? "Encrypted" : "Cifrado" },
-          { icon: Check, label: language === "en" ? "Verified" : "Verificado" },
+          { icon: Shield, label: t.secureLabel },
+          { icon: Lock, label: t.encryptedLabel },
+          { icon: Check, label: t.verifiedLabel },
         ].map((item, i) => (
           <motion.div
             key={i}

@@ -20,6 +20,31 @@ export const navLinks = {
     { href: "/about", label: "について" },
     { href: "/donate", label: "寄付" },
   ],
+  zh: [
+    { href: "/", label: "首页" },
+    { href: "/about", label: "关于" },
+    { href: "/donate", label: "捐赠" },
+  ],
+  hi: [
+    { href: "/", label: "होम" },
+    { href: "/about", label: "के बारे में" },
+    { href: "/donate", label: "दान करें" },
+  ],
+  bn: [
+    { href: "/", label: "হোম" },
+    { href: "/about", label: "সম্পর্কে" },
+    { href: "/donate", label: "দান করুন" },
+  ],
+  pt: [
+    { href: "/", label: "Início" },
+    { href: "/about", label: "Sobre" },
+    { href: "/donate", label: "Doar" },
+  ],
+  ru: [
+    { href: "/", label: "Главная" },
+    { href: "/about", label: "О нас" },
+    { href: "/donate", label: "Пожертвовать" },
+  ],
 };
 
 // Site content in both languages
@@ -412,6 +437,491 @@ export const content = {
       },
     },
   },
+  zh: {
+    nav: {
+      donate: "捐赠$1",
+    },
+    hero: {
+      headline: "基于微额捐赠的全球倡议",
+      subheadline: "通过大规模的小额捐款，支持与地幔相关的科学推广、教育和开放项目。",
+      primaryCTA: "捐赠$1",
+      secondaryCTA: "运作方式",
+    },
+    intro: {
+      text: "该项目提出了一种简单的集体参与形式。成千上万甚至数百万人的小额捐款，可以为具体的推广和科学教育行动提供资金。",
+    },
+    disclaimer: {
+      text: "该倡议并非旨在对地球进行物理干预，而是支持知识、教育和严谨的科学传播。",
+    },
+    stats: {
+      participants: "全球参与者",
+      countries: "参与国家",
+      raised: "筹集美元",
+    },
+    problem: {
+      title: "我们保护什么",
+      subtitle: "地幔 — 我们脚下的保护层",
+      description: "在地表深处是地幔，这是塑造我们星球地质和未来的关键层。这项运动象征着我们对行星管理的集体承诺。",
+    },
+    solution: {
+      title: "运作方式",
+      subtitle: "简单。清晰。透明。",
+      steps: [
+        {
+          title: "可及的贡献",
+          description: "任何人都可以通过最低限度的捐款参与。",
+        },
+        {
+          title: "明确的资金使用",
+          description: "资源分配给科学推广、开放教育材料和具有可验证结果的项目。",
+        },
+        {
+          title: "监督和透明度",
+          description: "定期发布资金使用和影响指标的报告。",
+        },
+      ],
+    },
+    impact: {
+      title: "您的$1能做什么",
+      description: "每一笔捐款都为保护我们星球未来的研究、认识和保护工作提供资金。",
+      progressLabel: "影响进度",
+    },
+    transparency: {
+      title: "您的钱去哪里",
+      subtitle: "100%透明分配",
+      breakdown: [
+        { label: "研究与科学", value: 40, color: "#3b82f6" },
+        { label: "保护项目", value: 35, color: "#8b5cf6" },
+        { label: "教育与认识", value: 20, color: "#06b6d4" },
+        { label: "运营", value: 5, color: "#6b7280" },
+      ],
+    },
+    faq: {
+      title: "有问题吗？",
+      subtitle: "您需要知道的一切",
+      items: [
+        {
+          question: "资金如何使用？",
+          answer: "资金支持与地幔研究相关的科学推广、教育和公共项目。",
+        },
+        {
+          question: "谁管理这项倡议？",
+          answer: "一个具有公开标准和透明承诺的组织团队。",
+        },
+        {
+          question: "我可以捐赠超过$1吗？",
+          answer: "可以。虽然$1是建议的最低金额，但欢迎更大的捐款。",
+        },
+        {
+          question: "我的捐款安全吗？",
+          answer: "是的。我们使用行业标准加密和安全支付处理。",
+        },
+      ],
+      ctaText: "还有问题吗？",
+      ctaButton: "联系我们",
+    },
+    finalCTA: {
+      title: "成为历史的一部分",
+      subtitle: "加入全球运动。今天就捐款。",
+      button: "现在捐赠$1",
+    },
+    footer: {
+      tagline: "保护地球，一次一美元。",
+      links: {
+        privacy: "隐私政策",
+        terms: "服务条款",
+        contact: "联系方式",
+      },
+    },
+  },
+  hi: {
+    nav: {
+      donate: "$1 दान करें",
+    },
+    hero: {
+      headline: "सूक्ष्म-दान पर आधारित एक वैश्विक पहल",
+      subheadline: "पृथ्वी के मेंटल से संबंधित वैज्ञानिक आउटरीच, शिक्षा और खुली परियोजनाओं का समर्थन करने के लिए बड़े पैमाने पर छोटे योगदान।",
+      primaryCTA: "$1 दान करें",
+      secondaryCTA: "यह कैसे काम करता है",
+    },
+    intro: {
+      text: "यह परियोजना सामूहिक भागीदारी का एक सरल रूप प्रस्तावित करती है। हजारों या लाखों लोगों द्वारा दोहराया गया एक छोटा योगदान, आउटरीच और वैज्ञानिक शिक्षा में ठोस कार्यों के लिए धन उपलब्ध कराता है।",
+    },
+    disclaimer: {
+      text: "इस पहल का उद्देश्य ग्रह पर भौतिक रूप से हस्तक्षेप करना नहीं है, बल्कि ज्ञान, शिक्षा और कठोर वैज्ञानिक संचार का समर्थन करना है।",
+    },
+    stats: {
+      participants: "वैश्विक प्रतिभागी",
+      countries: "शामिल देश",
+      raised: "जुटाए गए डॉलर",
+    },
+    problem: {
+      title: "हम क्या सुरक्षित कर रहे हैं",
+      subtitle: "पृथ्वी का मेंटल — हमारे पैरों के नीचे सुरक्षात्मक परत",
+      description: "सतह के गहरे नीचे मेंटल है, एक महत्वपूर्ण परत जो हमारे ग्रह के भूविज्ञान और भविष्य को आकार देती है। यह अभियान ग्रहीय प्रबंधन के प्रति हमारी सामूहिक प्रतिबद्धता का प्रतीक है।",
+    },
+    solution: {
+      title: "यह कैसे काम करता है",
+      subtitle: "सरल। स्पष्ट। पारदर्शी।",
+      steps: [
+        {
+          title: "सुलभ योगदान",
+          description: "कोई भी न्यूनतम योगदान के साथ भाग ले सकता है।",
+        },
+        {
+          title: "धन का स्पष्ट उपयोग",
+          description: "संसाधनों को वैज्ञानिक आउटरीच, खुली शैक्षिक सामग्री और सत्यापन योग्य परिणामों वाली परियोजनाओं के लिए आवंटित किया जाता है।",
+        },
+        {
+          title: "निगरानी और पारदर्शिता",
+          description: "धन उपयोग और प्रभाव मेट्रिक्स के साथ आवधिक रिपोर्ट प्रकाशित की जाती हैं।",
+        },
+      ],
+    },
+    impact: {
+      title: "आपका $1 क्या करता है",
+      description: "प्रत्येक योगदान अनुसंधान, जागरूकता और संरक्षण प्रयासों को निधि देता है जो हमारे ग्रह के भविष्य की रक्षा करते हैं।",
+      progressLabel: "प्रभाव प्रगति",
+    },
+    transparency: {
+      title: "आपका पैसा कहाँ जाता है",
+      subtitle: "100% पारदर्शी आवंटन",
+      breakdown: [
+        { label: "अनुसंधान और विज्ञान", value: 40, color: "#3b82f6" },
+        { label: "संरक्षण परियोजनाएं", value: 35, color: "#8b5cf6" },
+        { label: "शिक्षा और जागरूकता", value: 20, color: "#06b6d4" },
+        { label: "संचालन", value: 5, color: "#6b7280" },
+      ],
+    },
+    faq: {
+      title: "प्रश्न?",
+      subtitle: "वह सब कुछ जो आपको जानने की आवश्यकता है",
+      items: [
+        {
+          question: "पैसे का उपयोग कैसे किया जाता है?",
+          answer: "धन पृथ्वी के मेंटल के अध्ययन से संबंधित वैज्ञानिक आउटरीच, शिक्षा और सार्वजनिक परियोजनाओं का समर्थन करता है।",
+        },
+        {
+          question: "पहल का प्रबंधन कौन करता है?",
+          answer: "सार्वजनिक मानदंडों और पारदर्शिता की प्रतिबद्धता के साथ एक आयोजन टीम।",
+        },
+        {
+          question: "क्या मैं $1 से अधिक योगदान कर सकता हूं?",
+          answer: "हाँ। जबकि $1 सुझाई गई न्यूनतम राशि है, बड़े योगदान का स्वागत है।",
+        },
+        {
+          question: "क्या मेरा योगदान सुरक्षित है?",
+          answer: "हाँ। हम उद्योग-मानक एन्क्रिप्शन और सुरक्षित भुगतान प्रसंस्करण का उपयोग करते हैं।",
+        },
+      ],
+      ctaText: "अभी भी सवाल हैं?",
+      ctaButton: "हमसे संपर्क करें",
+    },
+    finalCTA: {
+      title: "इतिहास का हिस्सा बनें",
+      subtitle: "वैश्विक आंदोलन में शामिल हों। आज दान करें।",
+      button: "अभी $1 दान करें",
+    },
+    footer: {
+      tagline: "एक समय में एक डॉलर, पृथ्वी की रक्षा करना।",
+      links: {
+        privacy: "गोपनीयता नीति",
+        terms: "सेवा की शर्तें",
+        contact: "संपर्क करें",
+      },
+    },
+  },
+  bn: {
+    nav: {
+      donate: "$1 দান করুন",
+    },
+    hero: {
+      headline: "মাইক্রো-ডোনেশনের উপর ভিত্তি করে একটি বৈশ্বিক উদ্যোগ",
+      subheadline: "পৃথিবীর ম্যান্টেল সম্পর্কিত বৈজ্ঞানিক প্রচার, শিক্ষা এবং উন্মুক্ত প্রকল্পগুলিকে সমর্থন করার জন্য বৃহৎ স্কেলে ছোট অবদান।",
+      primaryCTA: "$1 দান করুন",
+      secondaryCTA: "এটি কীভাবে কাজ করে",
+    },
+    intro: {
+      text: "প্রকল্পটি সমষ্টিগত অংশগ্রহণের একটি সহজ রূপ প্রস্তাব করে। হাজার হাজার বা লক্ষ লক্ষ মানুষের দ্বারা পুনরাবৃত্ত একটি ছোট অবদান, প্রচার এবং বৈজ্ঞানিক শিক্ষায় সুনির্দিষ্ট পদক্ষেপের জন্য তহবিল সক্ষম করে।",
+    },
+    disclaimer: {
+      text: "এই উদ্যোগটি গ্রহে শারীরিকভাবে হস্তক্ষেপ করার লক্ষ্য নয়, তবে জ্ঞান, শিক্ষা এবং কঠোর বৈজ্ঞানিক যোগাযোগকে সমর্থন করার লক্ষ্য।",
+    },
+    stats: {
+      participants: "বৈশ্বিক অংশগ্রহণকারী",
+      countries: "যোগদানকারী দেশ",
+      raised: "উত্থাপিত ডলার",
+    },
+    problem: {
+      title: "আমরা কী রক্ষা করছি",
+      subtitle: "পৃথিবীর ম্যান্টেল — আমাদের পায়ের নীচে সুরক্ষা স্তর",
+      description: "পৃষ্ঠের গভীরে ম্যান্টেল রয়েছে, একটি গুরুত্বপূর্ণ স্তর যা আমাদের গ্রহের ভূতত্ত্ব এবং ভবিষ্যৎ গঠন করে। এই প্রচারাভিযানটি গ্রহ পরিচালনার প্রতি আমাদের সমষ্টিগত প্রতিশ্রুতির প্রতীক।",
+    },
+    solution: {
+      title: "এটি কীভাবে কাজ করে",
+      subtitle: "সহজ। পরিষ্কার। স্বচ্ছ।",
+      steps: [
+        {
+          title: "অ্যাক্সেসযোগ্য অবদান",
+          description: "যে কেউ ন্যূনতম অবদান দিয়ে অংশ নিতে পারে।",
+        },
+        {
+          title: "তহবিলের স্পষ্ট ব্যবহার",
+          description: "সম্পদগুলি বৈজ্ঞানিক প্রচার, উন্মুক্ত শিক্ষা উপকরণ এবং যাচাইযোগ্য ফলাফল সহ প্রকল্পগুলিতে বরাদ্দ করা হয়।",
+        },
+        {
+          title: "পর্যবেক্ষণ এবং স্বচ্ছতা",
+          description: "তহবিল ব্যবহার এবং প্রভাব মেট্রিক্স সহ পর্যায়ক্রমিক প্রতিবেদন প্রকাশিত হয়।",
+        },
+      ],
+    },
+    impact: {
+      title: "আপনার $1 কী করে",
+      description: "প্রতিটি অবদান গবেষণা, সচেতনতা এবং সংরক্ষণ প্রচেষ্টায় তহবিল দেয় যা আমাদের গ্রহের ভবিষ্যৎ রক্ষা করে।",
+      progressLabel: "প্রভাব অগ্রগতি",
+    },
+    transparency: {
+      title: "আপনার অর্থ কোথায় যায়",
+      subtitle: "100% স্বচ্ছ বরাদ্দ",
+      breakdown: [
+        { label: "গবেষণা ও বিজ্ঞান", value: 40, color: "#3b82f6" },
+        { label: "সংরক্ষণ প্রকল্প", value: 35, color: "#8b5cf6" },
+        { label: "শিক্ষা ও সচেতনতা", value: 20, color: "#06b6d4" },
+        { label: "পরিচালনা", value: 5, color: "#6b7280" },
+      ],
+    },
+    faq: {
+      title: "প্রশ্ন?",
+      subtitle: "আপনার যা জানা প্রয়োজন সবকিছু",
+      items: [
+        {
+          question: "অর্থ কীভাবে ব্যবহার করা হয়?",
+          answer: "তহবিল পৃথিবীর ম্যান্টেলের গবেষণা সম্পর্কিত বৈজ্ঞানিক প্রচার, শিক্ষা এবং পাবলিক প্রকল্পগুলিকে সমর্থন করে।",
+        },
+        {
+          question: "উদ্যোগটি কে পরিচালনা করে?",
+          answer: "পাবলিক মানদণ্ড এবং স্বচ্ছতার প্রতি প্রতিশ্রুতি সহ একটি সংগঠক দল।",
+        },
+        {
+          question: "আমি কি $1 এর বেশি অবদান রাখতে পারি?",
+          answer: "হ্যাঁ। যদিও $1 প্রস্তাবিত সর্বনিম্ন, বড় অবদান স্বাগত।",
+        },
+        {
+          question: "আমার অবদান কি নিরাপদ?",
+          answer: "হ্যাঁ। আমরা ইন্ডাস্ট্রি-স্ট্যান্ডার্ড এনক্রিপশন এবং নিরাপদ পেমেন্ট প্রসেসিং ব্যবহার করি।",
+        },
+      ],
+      ctaText: "এখনও প্রশ্ন আছে?",
+      ctaButton: "আমাদের সাথে যোগাযোগ করুন",
+    },
+    finalCTA: {
+      title: "ইতিহাসের অংশ হন",
+      subtitle: "বৈশ্বিক আন্দোলনে যোগ দিন। আজই দান করুন।",
+      button: "এখনই $1 দান করুন",
+    },
+    footer: {
+      tagline: "পৃথিবী রক্ষা করা, এক সময়ে এক ডলার।",
+      links: {
+        privacy: "গোপনীয়তা নীতি",
+        terms: "সেবার শর্তাবলী",
+        contact: "যোগাযোগ",
+      },
+    },
+  },
+  pt: {
+    nav: {
+      donate: "Doar $1",
+    },
+    hero: {
+      headline: "Uma iniciativa global baseada em micro-doações",
+      subheadline: "Pequenas contribuições, em grande escala, para apoiar divulgação científica, educação e projetos abertos relacionados ao manto da Terra.",
+      primaryCTA: "Doar $1",
+      secondaryCTA: "Como funciona",
+    },
+    intro: {
+      text: "O projeto propõe uma forma simples de participação coletiva. Uma pequena contribuição, repetida por milhares ou milhões de pessoas, permite financiar ações concretas de divulgação e educação científica.",
+    },
+    disclaimer: {
+      text: "Esta iniciativa não pretende intervir fisicamente no planeta, mas apoiar o conhecimento, a educação e a comunicação científica rigorosa.",
+    },
+    stats: {
+      participants: "Participantes Globais",
+      countries: "Países Participantes",
+      raised: "Dólares Arrecadados",
+    },
+    problem: {
+      title: "O Que Estamos Protegendo",
+      subtitle: "O manto da Terra — a camada protetora sob nossos pés",
+      description: "Profundamente abaixo da superfície está o manto, uma camada crítica que molda a geologia e o futuro do nosso planeta. Esta campanha simboliza nosso compromisso coletivo com a gestão planetária.",
+    },
+    solution: {
+      title: "Como Funciona",
+      subtitle: "Simples. Claro. Transparente.",
+      steps: [
+        {
+          title: "Contribuição acessível",
+          description: "Qualquer pessoa pode participar com uma contribuição mínima.",
+        },
+        {
+          title: "Uso claro dos fundos",
+          description: "Os recursos são alocados para divulgação científica, materiais educacionais abertos e projetos com resultados verificáveis.",
+        },
+        {
+          title: "Monitoramento e transparência",
+          description: "Relatórios periódicos são publicados com uso de fundos e métricas de impacto.",
+        },
+      ],
+    },
+    impact: {
+      title: "O Que Seu $1 Faz",
+      description: "Cada contribuição financia pesquisa, conscientização e esforços de conservação que protegem o futuro do nosso planeta.",
+      progressLabel: "Progresso do Impacto",
+    },
+    transparency: {
+      title: "Para Onde Vai Seu Dinheiro",
+      subtitle: "100% de Alocação Transparente",
+      breakdown: [
+        { label: "Pesquisa e Ciência", value: 40, color: "#3b82f6" },
+        { label: "Projetos de Conservação", value: 35, color: "#8b5cf6" },
+        { label: "Educação e Conscientização", value: 20, color: "#06b6d4" },
+        { label: "Operações", value: 5, color: "#6b7280" },
+      ],
+    },
+    faq: {
+      title: "Perguntas?",
+      subtitle: "Tudo o que você precisa saber",
+      items: [
+        {
+          question: "Como o dinheiro é usado?",
+          answer: "Os fundos apoiam divulgação científica, educação e projetos públicos relacionados ao estudo do manto da Terra.",
+        },
+        {
+          question: "Quem gerencia a iniciativa?",
+          answer: "Uma equipe organizadora com critérios públicos e compromisso com a transparência.",
+        },
+        {
+          question: "Posso contribuir com mais de $1?",
+          answer: "Sim. Embora $1 seja o mínimo sugerido, contribuições maiores são bem-vindas.",
+        },
+        {
+          question: "Minha contribuição é segura?",
+          answer: "Sim. Usamos criptografia padrão da indústria e processamento de pagamento seguro.",
+        },
+      ],
+      ctaText: "Ainda tem perguntas?",
+      ctaButton: "Entre em Contato",
+    },
+    finalCTA: {
+      title: "Faça Parte da História",
+      subtitle: "Junte-se ao movimento global. Doe hoje.",
+      button: "Doar $1 Agora",
+    },
+    footer: {
+      tagline: "Protegendo a Terra, um dólar de cada vez.",
+      links: {
+        privacy: "Política de Privacidade",
+        terms: "Termos de Serviço",
+        contact: "Contato",
+      },
+    },
+  },
+  ru: {
+    nav: {
+      donate: "Пожертвовать $1",
+    },
+    hero: {
+      headline: "Глобальная инициатива, основанная на микропожертвованиях",
+      subheadline: "Небольшие взносы в большом масштабе для поддержки научной популяризации, образования и открытых проектов, связанных с мантией Земли.",
+      primaryCTA: "Пожертвовать $1",
+      secondaryCTA: "Как это работает",
+    },
+    intro: {
+      text: "Проект предлагает простую форму коллективного участия. Небольшой взнос, повторенный тысячами или миллионами людей, позволяет финансировать конкретные действия по популяризации и научному образованию.",
+    },
+    disclaimer: {
+      text: "Эта инициатива не направлена на физическое вмешательство в планету, а на поддержку знаний, образования и строгой научной коммуникации.",
+    },
+    stats: {
+      participants: "Глобальные участники",
+      countries: "Присоединившиеся страны",
+      raised: "Собранные доллары",
+    },
+    problem: {
+      title: "Что мы защищаем",
+      subtitle: "Мантия Земли — защитный слой под нашими ногами",
+      description: "Глубоко под поверхностью находится мантия, критический слой, который формирует геологию и будущее нашей планеты. Эта кампания символизирует наше коллективное обязательство по управлению планетой.",
+    },
+    solution: {
+      title: "Как это работает",
+      subtitle: "Просто. Ясно. Прозрачно.",
+      steps: [
+        {
+          title: "Доступный вклад",
+          description: "Любой может участвовать с минимальным взносом.",
+        },
+        {
+          title: "Четкое использование средств",
+          description: "Ресурсы выделяются на научную популяризацию, открытые образовательные материалы и проекты с проверяемыми результатами.",
+        },
+        {
+          title: "Мониторинг и прозрачность",
+          description: "Периодически публикуются отчеты об использовании средств и показателях воздействия.",
+        },
+      ],
+    },
+    impact: {
+      title: "Что делает ваш $1",
+      description: "Каждый взнос финансирует исследования, повышение осведомленности и усилия по сохранению, которые защищают будущее нашей планеты.",
+      progressLabel: "Прогресс воздействия",
+    },
+    transparency: {
+      title: "Куда идут ваши деньги",
+      subtitle: "100% прозрачное распределение",
+      breakdown: [
+        { label: "Исследования и наука", value: 40, color: "#3b82f6" },
+        { label: "Проекты по сохранению", value: 35, color: "#8b5cf6" },
+        { label: "Образование и осведомленность", value: 20, color: "#06b6d4" },
+        { label: "Операции", value: 5, color: "#6b7280" },
+      ],
+    },
+    faq: {
+      title: "Вопросы?",
+      subtitle: "Все, что вам нужно знать",
+      items: [
+        {
+          question: "Как используются деньги?",
+          answer: "Средства поддерживают научную популяризацию, образование и общественные проекты, связанные с изучением мантии Земли.",
+        },
+        {
+          question: "Кто управляет инициативой?",
+          answer: "Организационная команда с публичными критериями и обязательством прозрачности.",
+        },
+        {
+          question: "Могу ли я внести больше $1?",
+          answer: "Да. Хотя $1 является рекомендуемым минимумом, большие взносы приветствуются.",
+        },
+        {
+          question: "Безопасен ли мой взнос?",
+          answer: "Да. Мы используем стандартное шифрование и безопасную обработку платежей.",
+        },
+      ],
+      ctaText: "Все еще есть вопросы?",
+      ctaButton: "Свяжитесь с нами",
+    },
+    finalCTA: {
+      title: "Станьте частью истории",
+      subtitle: "Присоединяйтесь к глобальному движению. Пожертвуйте сегодня.",
+      button: "Пожертвовать $1 сейчас",
+    },
+    footer: {
+      tagline: "Защищая Землю, по одному доллару за раз.",
+      links: {
+        privacy: "Политика конфиденциальности",
+        terms: "Условия обслуживания",
+        contact: "Контакты",
+      },
+    },
+  },
 };
 
 // Brand constants
@@ -425,8 +935,18 @@ export const BRAND = {
 export const INITIAL_STATS = {
   participants: 2847391,
   countries: 142,
-  raised: 2847391,
+  raised: 4523847, // Mayor que participantes porque no todos donan $1
 };
+
+// Incrementos por minuto para las estadísticas
+export const STATS_INCREMENT = {
+  participants: 60, // 60 nuevos participantes por minuto
+  countries: 0.1, // Aproximadamente 1 país nuevo cada 10 minutos
+  raised: 95, // 95 dólares por minuto (promedio ~$1.58 por donación)
+};
+
+// Intervalo de actualización en milisegundos
+export const STATS_UPDATE_INTERVAL = 3000; // Actualizar cada 3 segundos
 
 // Social links (placeholders)
 export const SOCIAL_LINKS = [
