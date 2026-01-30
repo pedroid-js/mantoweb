@@ -67,7 +67,7 @@ export default function Navbar() {
             <ThemeToggle />
             <Link href="/donate">
               <Button variant="primary" size="md">
-                {language === "en" ? "Contribute $1" : "Aportar $1"}
+                {language === "en" ? "Contribute $1" : language === "ko" ? "$1 기부하기" : language === "ja" ? "$1寄付する" : "Aportar $1"}
               </Button>
             </Link>
           </div>
