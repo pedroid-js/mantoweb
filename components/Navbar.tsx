@@ -74,6 +74,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
+            <LanguageToggle language={language} onLanguageChange={setLanguage} />
             <ThemeToggle />
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
@@ -108,10 +109,7 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <div className="pt-4 border-t border-white/10">
-            <LanguageToggle language={language} onLanguageChange={setLanguage} />
-          </div>
-          <Link href="/donate" onClick={() => setIsOpen(false)}>
+          <Link href="/donate" onClick={() => setIsOpen(false)} className="block pt-4">
             <Button variant="primary" size="md" className="w-full">
               {language === "en" ? "Contribute $1" : language === "es" ? "Aportar $1" : language === "ko" ? "$1 기부하기" : language === "ja" ? "$1寄付する" : language === "zh" ? "捐赠$1" : language === "hi" ? "$1 दान करें" : language === "bn" ? "$1 दान করুন" : language === "pt" ? "Contribuir $1" : language === "ru" ? "Внести $1" : "Contribute $1"}
             </Button>
